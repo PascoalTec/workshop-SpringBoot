@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.cursoSpringBoot.course.Entity.User;
+import com.cursoSpringBoot.course.Entity.UserEntity;
 import com.cursoSpringBoot.course.Services.UserService;
 
 @RestController
@@ -20,14 +20,14 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> list = service.findAll(); 
+    public ResponseEntity<List<UserEntity>> findAll(){
+        List<UserEntity> list = service.findAll(); 
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User obj = service.findById(id);
+    public ResponseEntity<UserEntity> findById(@PathVariable Long id) {
+        UserEntity obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
 
     }
