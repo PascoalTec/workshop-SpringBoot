@@ -2,15 +2,18 @@ package com.cursoSpringBoot.course.config;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Locale.Category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.cursoSpringBoot.course.Entity.CategoryEntity;
 import com.cursoSpringBoot.course.Entity.OrderEntity;
 import com.cursoSpringBoot.course.Entity.UserEntity;
 import com.cursoSpringBoot.course.Enums.OrderEnums;
+import com.cursoSpringBoot.course.Repository.CategoryRepository;
 import com.cursoSpringBoot.course.Repository.OrderRepository;
 import com.cursoSpringBoot.course.Repository.UserRepository;
 
@@ -24,8 +27,16 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
+
+        CategoryEntity cat1 = new CategoryEntity(null, "Electronics"); 
+        CategoryEntity cat2 = new CategoryEntity(null, "Books"); 
+        CategoryEntity cat3 = new CategoryEntity(null, "Computers");
+
 
         UserEntity u1 = new UserEntity(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         UserEntity u2 = new UserEntity(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
@@ -35,6 +46,7 @@ public class TestConfig implements CommandLineRunner {
         OrderEntity o3 = new OrderEntity(null, Instant.parse("2019-07-22T15:21:22Z"), OrderEnums.WAITING_PAYMENT, u1);
 
 
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
     }
