@@ -11,31 +11,32 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "tb_category")
-public class CategoryEntity implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
+@Table(name = "tb_product")
+public class ProductEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
+    private Double price;
+    private String imgUrl;
 
     @Transient
-    private Set<ProductEntity> products = new HashSet<>();
-
+    private Set<CategoryEntity> categories = new HashSet<>();
     
-    public CategoryEntity(){
+    public ProductEntity(){
         
     }
     
-    public CategoryEntity(Long id, String name) {
+    public ProductEntity(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
-    }
-
-    public Set<ProductEntity> getProducts() {
-        return products;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
     }
     
     public Long getId() {
@@ -54,6 +55,34 @@ public class CategoryEntity implements Serializable {
         this.name = name;
     }
     
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public Double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+    
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -61,7 +90,7 @@ public class CategoryEntity implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -70,7 +99,7 @@ public class CategoryEntity implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CategoryEntity other = (CategoryEntity) obj;
+        ProductEntity other = (ProductEntity) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -78,5 +107,5 @@ public class CategoryEntity implements Serializable {
             return false;
         return true;
     }
-
+    
 }
