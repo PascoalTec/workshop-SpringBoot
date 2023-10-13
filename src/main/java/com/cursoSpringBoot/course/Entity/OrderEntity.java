@@ -2,6 +2,7 @@ package com.cursoSpringBoot.course.Entity;
 
 import java.io.Serializable;
 import java.time.Instant;
+import com.cursoSpringBoot.course.Enums.OrderEnums;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +24,8 @@ public class OrderEntity implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT" )
     private Instant moment;
 
+    private Integer orderEnums;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private UserEntity client;
@@ -31,28 +34,38 @@ public class OrderEntity implements Serializable {
         
     }
 
-    public OrderEntity(Long id, Instant moment, UserEntity client) {
+    public OrderEntity(Long id, Instant moment, OrderEnums orderEnums, UserEntity client) {
         this.id = id;
         this.moment = moment;
+        setOrderEnums(orderEnums);
         this.client = client;
     }
 
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public Instant getMoment() {
         return moment;
     }
-
+    
     public void setMoment(Instant moment) {
         this.moment = moment;
     }
+    
+    public OrderEnums getOrderEnums() {
+        return OrderEnums.valueOf(orderEnums);
+    }
 
+    public void setOrderEnums(OrderEnums orderEnums) {
+        if(orderEnums != null){
+        this.orderEnums = orderEnums.getCode();
+        }
+    }
     
     public UserEntity getClient() {
         return client;
@@ -87,4 +100,5 @@ public class OrderEntity implements Serializable {
         return true;
     }
     
+
 }
