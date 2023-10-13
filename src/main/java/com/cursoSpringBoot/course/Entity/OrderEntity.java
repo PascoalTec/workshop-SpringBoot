@@ -2,6 +2,8 @@ package com.cursoSpringBoot.course.Entity;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import com.cursoSpringBoot.course.Enums.OrderEnums;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +32,9 @@ public class OrderEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private UserEntity client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderEntity> items = new HashSet<>();
 
     public OrderEntity(){
         
@@ -75,6 +81,11 @@ public class OrderEntity implements Serializable {
         this.client = client;
     }
     
+    public Set<OrderEntity> getItems(){
+        return items;
+    }
+
+
     @Override
     public int hashCode() {
         final int prime = 31;

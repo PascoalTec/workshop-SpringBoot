@@ -2,19 +2,18 @@ package com.cursoSpringBoot.course.config;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Locale.Category;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
 import com.cursoSpringBoot.course.Entity.CategoryEntity;
 import com.cursoSpringBoot.course.Entity.OrderEntity;
+import com.cursoSpringBoot.course.Entity.OrderItemEntity;
 import com.cursoSpringBoot.course.Entity.ProductEntity;
 import com.cursoSpringBoot.course.Entity.UserEntity;
 import com.cursoSpringBoot.course.Enums.OrderEnums;
 import com.cursoSpringBoot.course.Repository.CategoryRepository;
+import com.cursoSpringBoot.course.Repository.OrderItemRepository;
 import com.cursoSpringBoot.course.Repository.OrderRepository;
 import com.cursoSpringBoot.course.Repository.ProductRepository;
 import com.cursoSpringBoot.course.Repository.UserRepository;
@@ -34,6 +33,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -57,12 +59,19 @@ public class TestConfig implements CommandLineRunner {
         OrderEntity o3 = new OrderEntity(null, Instant.parse("2019-07-22T15:21:22Z"), OrderEnums.WAITING_PAYMENT, u1);
 
 
+        OrderItemEntity oi1 = new OrderItemEntity(o1, p1, 2, p1.getPrice()); 
+        OrderItemEntity oi2 = new OrderItemEntity(o1, p3, 1, p3.getPrice()); 
+        OrderItemEntity oi3 = new OrderItemEntity(o2, p3, 2, p3.getPrice()); 
+        OrderItemEntity oi4 = new OrderItemEntity(o3, p5, 2, p5.getPrice());
+
+
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 
-        
+
         p1.getCategories().add(cat2);
         p2.getCategories().add(cat1);
         p2.getCategories().add(cat3);

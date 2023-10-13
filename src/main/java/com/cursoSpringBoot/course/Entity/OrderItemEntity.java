@@ -2,7 +2,7 @@ package com.cursoSpringBoot.course.Entity;
 
 import java.io.Serializable;
 import com.cursoSpringBoot.course.Entity.pk.OrderItemPK;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -14,7 +14,7 @@ public class OrderItemEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @EmbeddedId
-    private OrderItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -27,6 +27,7 @@ public class OrderItemEntity implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public OrderEntity getOrderEntity() {
         return id.getOrderEntity();
     }
